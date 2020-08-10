@@ -115,16 +115,32 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        cmd_args = args.split()
+        if len(cmd_args) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif len(cmd_args) == 1 and cmd_args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        elif len(cmd_args) == 1 and cmd_args[0] in HBNBCommand.classes:
+            new_instance = HBNBCommand.classes[cmd_args[0]]()
+            storage.save()
+            print(new_instance.id)
+            storage.save()
+        elif len(cmd_args) > 1:
+            new_instance = HBNBCommand.classes[cmd_args[0]]()
+            for param in cmd_args[1:]:
+                attr_name = param[:param.find("=")]
+                attr_value = param[param.find("=")+1:]
+                if attr_name in HBNBCommand.types and type(eval(attr_value))\
+                        != HBNBCommand.types[attr_name]:
+                    return
+                elif attr_name not in HBNBCommand.types and\
+                        type(eval(attr_value)) != str:
+                    return
+                setattr(new_instance, attr_name, eval(attr_value))
+            print(new_instance.id)
+            storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -319,6 +335,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
