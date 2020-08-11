@@ -56,8 +56,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        if obj is not None:
-            for k, v in FileStorage.__objects.items():
-                if obj.id == v.id:
-                    break
-            FileStorage.__objects.pop(k)
+        for k, v in FileStorage.__objects.items():
+            if obj.id == v.id:
+                break
+        FileStorage.__objects.pop(k)
