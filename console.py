@@ -138,6 +138,12 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         continue
 
+                    elif isinstance(eval(value), int):
+                        value = int(value)
+
+                    elif isinstance(eval(value), float):
+                        value = float(value)
+
                     setattr(new_instance, key, value)
 
             new_instance.save()
