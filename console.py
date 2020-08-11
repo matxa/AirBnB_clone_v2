@@ -113,36 +113,36 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
-
-    def do_create(self, args):
-        """ Create an object of any class"""
-        cmd_args = args.split()
-        if len(cmd_args) == 0:
+    def do_create(self, line):
+        """Creates a new instance of BaseModel, saves it
+        """
+        try:
+            if not line:
+                raise SyntaxError()
+            my_list = line.split(" ")
+            params = my_list[1:]
+            obj = eval("{}()".format(my_list[0]))
+            for item in params:
+                key, value = item.split('=')
+                if len(value) >= 2 and value[0] is '"':
+                    value = value.replace("_", " ")
+                    for n in range(len(value)):
+                        if n > 0 and value[n] is '"':
+                            if value[n-1] is not "\\":
+                                n = n + 1
+                                value = value[:n]
+                                break
+                    setattr(obj, key, str(value[1:-1]))
+                elif '.' in value:
+                    setattr(obj, key, float(value))
+                else:
+                    setattr(obj, key, int(value))
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
             print("** class name missing **")
-            return
-        elif len(cmd_args) == 1 and cmd_args[0] not in HBNBCommand.classes:
+        except NameError:
             print("** class doesn't exist **")
-            return
-        elif len(cmd_args) == 1 and cmd_args[0] in HBNBCommand.classes:
-            new_instance = HBNBCommand.classes[cmd_args[0]]()
-            storage.save()
-            print(new_instance.id)
-            storage.save()
-        elif len(cmd_args) > 1:
-            new_instance = HBNBCommand.classes[cmd_args[0]]()
-            for param in cmd_args[1:]:
-                attr_name = param[:param.find("=")]
-                attr_value = param[param.find("=")+1:]
-                if attr_name in HBNBCommand.types and type(eval(attr_value))\
-                        != HBNBCommand.types[attr_name]:
-                    return
-                elif attr_name not in HBNBCommand.types and\
-                        type(eval(attr_value)) != str:
-                    return
-                setattr(new_instance, attr_name, eval(attr_value))
-            print(new_instance.id)
-            storage.save()
- 
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
