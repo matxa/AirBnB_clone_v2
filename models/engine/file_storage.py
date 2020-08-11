@@ -13,7 +13,7 @@ class FileStorage:
         dict_cls = {}
         if cls is not None:
             for k, v in FileStorage.__objects.items():
-                if v.to_dict()["__class__"] == cls.__name__:
+                if v.__class__ == cls:
                     dict_cls.update({k: v})
             return dict_cls
         return FileStorage.__objects
@@ -56,7 +56,10 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        for k, v in FileStorage.__objects.items():
-            if obj.id == v.id:
-                break
-        FileStorage.__objects.pop(k)
+        to_be_deleted = None
+        if obj in FileStorage.__objects.values():
+            for k, v in FileStorage.__objects.items():
+                if obj.id == v.id:
+                    to_be_deleted = k
+        if to_be_deleted is not None:
+            FileStorage.__objects.pop(to_be_deleted)
