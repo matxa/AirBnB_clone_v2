@@ -60,4 +60,4 @@ class FileStorage:
             for k, v in FileStorage.__objects.items():
                 if obj.id == v.id:
                     break
-            del FileStorage.__objects[k]
+            FileStorage.__objects.pop(k)
