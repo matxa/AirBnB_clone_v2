@@ -14,7 +14,7 @@ class FileStorage:
         if cls is not None:
             for k, v in FileStorage.__objects.items():
                 if v.__class__ == cls:
-                    dict_cls.update({k: v})
+                    dict_cls[k] = v
             return dict_cls
         return FileStorage.__objects
 
@@ -57,5 +57,5 @@ class FileStorage:
 
     def delete(self, obj=None):
         if obj:
-            del_ete = (type(obj).__name__, obj.id)
-            del FileStorage.__objects["{}.{}".format(*del_ete)]
+            del FileStorage.\
+                __objects["{}.{}".format(type(obj).__name__, obj.id)]
