@@ -115,10 +115,11 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        '''
-            Create a new instance of class BaseModel and saves it
-            to the JSON file.
-        '''
+        """Creates a new instance of BaseModel, saves it
+        Exceptions:
+            SyntaxError: when there is no args given
+            NameError: when there is no object taht has the name
+        """
         if len(args) == 0:
             print("** class name missing **")
             return
@@ -133,12 +134,6 @@ class HBNBCommand(cmd.Cmd):
                         if '_' in value:
                             value = value.replace('_', ' ')
                         value = str(value)
-
-                    elif isinstance(eval(value), float):
-                        value = float(value)
-
-                    elif isinstance(eval(value), int):
-                        value = int(value)
 
                     else:
                         continue
