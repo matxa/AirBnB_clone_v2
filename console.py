@@ -135,14 +135,14 @@ class HBNBCommand(cmd.Cmd):
                             value = value.replace('_', ' ')
                         value = str(value)
 
-                    else:
-                        continue
-
                     elif isinstance(eval(value), int):
                         value = int(value)
 
                     elif isinstance(eval(value), float):
                         value = float(value)
+
+                    else:
+                        continue
 
                     setattr(new_instance, key, value)
 
