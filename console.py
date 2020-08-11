@@ -132,6 +132,12 @@ class HBNBCommand(cmd.Cmd):
                         if '_' in character:
                             character = character.replace('_', ' ')
                         character = str(character)
+                    elif isinstance(eval(value), float):
+                        value = float(value)
+
+                    elif isinstance(eval(value), int):
+                        value = int(value)
+
                     else:
                         continue
 
