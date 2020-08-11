@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -114,33 +115,33 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        cmd_args = args.split()
-        if len(cmd_args) == 0:
+        """
+            Create a new instance of class BaseModel and saves to json.
+        """
+        if len(args) == 0:
             print("** class name missing **")
             return
-        elif len(cmd_args) == 1 and cmd_args[0] not in HBNBCommand.classes:
+        try:
+            args = shlex.split(args, posix=False)
+            new_instance = eval(args[0])()
+            if len(args) > 1:
+                for i in range(1, len(args)):
+                    key, character = args[i].split('=')
+                    if character[0] == '"' and character[len(character) - 1] == '"':
+                        character = character[1:len(character) - 1]
+                        if '_' in character:
+                            character = character.replace('_', ' ')
+                        character = str(character)
+                    else:
+                        continue
+
+                    setattr(new_instance, key, character)
+
+            new_instance.save()
+            print(new_instance.id) 
+        except Exception as e:
             print("** class doesn't exist **")
-            return
-        elif len(cmd_args) == 1 and cmd_args[0] in HBNBCommand.classes:
-            new_instance = HBNBCommand.classes[cmd_args[0]]()
-            storage.save()
-            print(new_instance.id)
-            storage.save()
-        elif len(cmd_args) > 1:
-            new_instance = HBNBCommand.classes[cmd_args[0]]()
-            for param in cmd_args[1:]:
-                attr_name = param[:param.find("=")]
-                attr_value = param[param.find("=")+1:]
-                if attr_name in HBNBCommand.types and type(eval(attr_value))\
-                        != HBNBCommand.types[attr_name]:
-                    return
-                elif attr_name not in HBNBCommand.types and\
-                        type(eval(attr_value)) != str:
-                    return
-                setattr(new_instance, attr_name, eval(attr_value))
-            print(new_instance.id)
-            storage.save()
+
 
     def help_create(self):
         """ Help information for the create method """
