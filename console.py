@@ -113,36 +113,45 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
-    def do_create(self, line):
-        """Creates a new instance of BaseModel, saves it
-        """
-        try:
-            if not line:
-                raise SyntaxError()
-            my_list = line.split(" ")
-            params = my_list[1:]
-            obj = eval("{}()".format(my_list[0]))
-            for item in params:
-                key, value = item.split('=')
-                if len(value) >= 2 and value[0] is '"':
-                    value = value.replace("_", " ")
-                    for n in range(len(value)):
-                        if n > 0 and value[n] is '"':
-                            if value[n-1] is not "\\":
-                                n = n + 1
-                                value = value[:n]
-                                break
-                    setattr(obj, key, str(value[1:-1]))
-                elif '.' in value:
-                    setattr(obj, key, float(value))
-                else:
-                    setattr(obj, key, int(value))
-            obj.save()
-            print("{}".format(obj.id))
-        except SyntaxError:
+
+    def do_create(self, args):
+        '''
+            Create a new instance of class BaseModel and saves it
+            to the JSON file.
+        '''
+        if len(args) == 0:
             print("** class name missing **")
-        except NameError:
+            return
+        try:
+            args = shlex.split(args, posix=False)
+            new_instance = eval(args[0])()
+            if len(args) > 1:
+                for i in range(1, len(args)):
+                    key, value = args[i].split('=')
+                    if value[0] == '"' and value[len(value) - 1] == '"':
+                        value = value[1:len(value) - 1]
+                        if '_' in value:
+                            value = value.replace('_', ' ')
+                        value = str(value)
+
+                    elif isinstance(eval(value), float):
+                        value = float(value)
+
+                    elif isinstance(eval(value), int):
+                        value = int(value)
+
+                    else:
+                        continue
+
+                    setattr(new_instance, key, value)
+
+            new_instance.save()
+            print(new_instance.id)
+
+        except Exception as e:
+            print(e)
             print("** class doesn't exist **")
+
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
