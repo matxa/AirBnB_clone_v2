@@ -56,10 +56,6 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        to_be_deleted = None
-        if obj in FileStorage.__objects.values():
-            for k, v in FileStorage.__objects.items():
-                if obj.id == v.id:
-                    to_be_deleted = k
-        if to_be_deleted is not None:
-            FileStorage.__objects.pop(to_be_deleted)
+        if obj:
+            del_ete = (type(obj).__name__, obj.id)
+            del FileStorage.__objects["{}.{}".format(*del_ete)]
