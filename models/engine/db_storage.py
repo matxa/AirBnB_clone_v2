@@ -7,6 +7,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import scoped_session
 from models.base_model import BaseModel, Base
 from models.user import User
 from models.place import Place
