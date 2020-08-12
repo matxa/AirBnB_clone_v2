@@ -10,9 +10,6 @@ from models.city import City
 import os
 
 
-Base = declarative_base()
-
-
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
