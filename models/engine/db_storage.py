@@ -7,13 +7,14 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, Session
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import MySQLdb
 
 classes = {
             'BaseModel': BaseModel, 'User': User, 'Place': Place,
@@ -30,16 +31,17 @@ class DBStorage:
 
     def __init__(self):
         """Initialize DBStorage"""
-        self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}/{}'.format(
-                os.environ.get('HBNB_MYSQL_USER'),
-                os.environ.get('HBNB_MYSQL_PWD'),
-                os.environ.get('HBNB_MYSQL_HOST'),
-                os.environ.get('HBNB_MYSQL_DB')),
-            pool_pre_ping=True)
+        user = getenv('HBNB_MYSQL_USER')
+        password = getenv('HBNB_MYSQL_PWD')
+        host = getenv('HBNB_MYSQL_HOST')
+        database = getenv('HBNB_MYSQL_DB')       
 
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}'.
+            format(user, password, host, database),
+            pool_pre_ping=True)
         if os.environ.get('HBNB_ENV') == 'test':
-            pass
+            Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """querry current database session"""
@@ -65,9 +67,14 @@ class DBStorage:
     
     def delete(self, obj=None):
         """ delete given obj """
-        self.__session.query(obj).delete(synchronize_session='fetch')
+        if obj is not None:
+            self.__session.delete(obj) 
 
     def reload(self):
         """ reload """
         self.__session = Session(self.__engine)
         Base.metadata.create_all(__engine)
+
+    def close(self)
+        """closes session"""
+        self.__session.close()
