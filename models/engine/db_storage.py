@@ -26,6 +26,7 @@ classes = {
 
 Base = declarative_base()
 
+
 class DBStorage:
     """DBStorage class"""
     __engine = None
@@ -36,7 +37,7 @@ class DBStorage:
         user = getenv('HBNB_MYSQL_USER')
         password = getenv('HBNB_MYSQL_PWD')
         host = getenv('HBNB_MYSQL_HOST')
-        database = getenv('HBNB_MYSQL_DB')       
+        database = getenv('HBNB_MYSQL_DB')
 
         self.__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.
@@ -55,7 +56,7 @@ class DBStorage:
             dictionary = self.__session.query(classes.values()).all()
 
         return dictionary
-        
+
     def new(self, obj):
         """ add obj to curr db """
         self.__session = Session(self.__engine)
@@ -66,16 +67,18 @@ class DBStorage:
     def save(self):
         """ save changes to database """
         self.__session.commit()
-    
+
     def delete(self, obj=None):
         """ delete given obj """
         if obj is not None:
-            self.__session.delete(obj) 
+            self.__session.delete(obj)
 
     def reload(self):
         """ reload """
+        session_fac = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session_fac)
+        Base.metadata.create_all(self.__engine)
         self.__session = Session(self.__engine)
-        Base.metadata.create_all(__engine)
 
     def close(self):
         """closes session"""
