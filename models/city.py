@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 """ City Module for HBNB project """
 from models.base_model import BaseModel
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import (create_engine)
-from sqlalchemy.orm import sessionmaker, Session
-
-# engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-#                        sys.argv[1], sys.argv[2], sys.argv[3]),
-#                        pool_pre_ping=True)
+from models.base_model import Base
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 class City(BaseModel):
-    """ The city class, contains state ID and name """
+    """ The city class, contains state ID and name
+    if a state is deleted, all cities tied to state also deleted
+    """
+
     __tablename__ = 'cities'
-    state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
     name = Column(String(128), nullable=False)
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+    places = relationship('Place', backref='cities',
+                          cascade='all, delete-orphan')
