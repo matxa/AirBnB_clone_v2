@@ -3,6 +3,7 @@
 import json
 from sys import argv
 import os
+from os import getenv
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (create_engine)
