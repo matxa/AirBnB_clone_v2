@@ -5,6 +5,8 @@ import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from os import getenv
+from models import storage
+# from models.amenity import Amenity
 
 
 metadata = Base.metadata
@@ -43,6 +45,7 @@ class Place(BaseModel, Base):
         amenities = relationship(
             'Amenity',
             secondary=place_amenity,
+            back_populates='place_amenities',
             viewonly=False)
 
     else:
@@ -57,3 +60,13 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+        @property
+        def amenities(self):
+            return self.amenity_ids
+
+        @amenities.setter
+        def amnenities(self, var=None):
+            from models.amenity import Amenity
+            storage.all(Amenity)
+            self.amenity_ids.append(self.id)
