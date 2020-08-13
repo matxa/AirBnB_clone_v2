@@ -24,8 +24,6 @@ classes = {
             'Review': Review
           }
 
-Base = declarative_base()
-
 
 class DBStorage:
     """DBStorage class"""
@@ -48,14 +46,23 @@ class DBStorage:
 
     def all(self, cls=None):
         """querry current database session"""
-        self.__session = Session(self.__engine)
-        dictionary = {}
+        self.__session = Session(bind=self.__engine)
+        query_data = []
         if cls:
-            dictionary = self.__session.query(cls).all()
+            query_data.append(self.__session.query(cls).all())
         else:
-            dictionary = self.__session.query(classes.values()).all()
+            # query_data.append(self.__session.query(User).all())
+            query_data.append(self.__session.query(State).all())
+            # query_data.append(self.__session.query(City).all())
+            # query_data.append(self.__session.query(Amenity).all())
+            # query_data.append(self.__session.query(Place).all())
+            # query_data.append(self.__session.query(Review).all())
 
-        return dictionary
+        dict_objs = {}
+        for row in query_data:
+            for i in range(len(row)):
+                dict_objs["{}.{}".format(type(row[i]).__name__, row[i].id)] = row[i]
+        return dict_objs
 
     def new(self, obj):
         """ add obj to curr db """
