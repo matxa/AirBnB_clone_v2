@@ -3,25 +3,25 @@
 from models.base_model import BaseModel, Base
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy.orm import relationship
 from os import getenv
 
 
-"""Task 10"""
-# metadata = Base.metadata
-# place_amenity = Table('place_amenity', metadata,
-#     Column(
-#         'place_id',
-#         String(60),
-#         ForeignKey('places.id'),
-#         primary_key=True,
-#         nullable=False),
-#     Column(
-#         'amenity_id',
-#         String(60),
-#         ForeignKey('amenities.id'),
-#         primary_key=True,
-#         nullable=False)
-#     )
+metadata = Base.metadata
+place_amenity = Table('place_amenity', metadata,
+    Column(
+        'place_id',
+        String(60),
+        ForeignKey('places.id'),
+        primary_key=True,
+        nullable=False),
+    Column(
+        'amenity_id',
+        String(60),
+        ForeignKey('amenities.id'),
+        primary_key=True,
+        nullable=False)
+    )
 
 
 class Place(BaseModel, Base):
@@ -40,11 +40,10 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         amenity_ids = []
-        """Task 10"""
-        # amenities = relationship(
-        #     'Amenity',
-        #     secondary=place_amenity,
-        #     viewonly=False)
+        amenities = relationship(
+            'Amenity',
+            secondary=place_amenity,
+            viewonly=False)
 
     else:
         city_id = ""
