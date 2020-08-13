@@ -10,7 +10,7 @@ import os
 
 class User(BaseModel, Base):
     '''
-        Definition class User 
+        Definition class User
     '''
     __tablename__ = 'users'
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
