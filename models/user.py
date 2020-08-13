@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-'''
-    Implementation of the User class which inherits from BaseModel
-'''
+"""Implementation of the User class which inherits from BaseModel"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
@@ -9,9 +7,7 @@ import os
 
 
 class User(BaseModel, Base):
-    '''
-        Definition class User
-    '''
+    """Definition class User"""
     __tablename__ = 'users'
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         email = Column(String(128), nullable=False)
