@@ -247,5 +247,34 @@
         "latitude": 37.773972,
         "longitude": -122.431297,
         "__class__": "Place"
+    },
+    "State.bd5b6119-83b2-4e01-9910-880d0e10cfa4": {
+        "id": "bd5b6119-83b2-4e01-9910-880d0e10cfa4",
+        "created_at": "2020-08-13T18:44:19.178934",
+        "updated_at": "2020-08-13T18:44:19.178952",
+        "name": "California",
+        "__class__": "State"
+    },
+    "State.cac2754f-a3f3-4a7a-bf43-7baf5e338c4d": {
+        "id": "cac2754f-a3f3-4a7a-bf43-7baf5e338c4d",
+        "created_at": "2020-08-13T18:44:19.179951",
+        "updated_at": "2020-08-13T18:44:19.179977",
+        "name": "Arizona",
+        "__class__": "State"
+    },
+    "Place.de14df85-f362-49e8-b58f-93e7c1e7fd09": {
+        "id": "de14df85-f362-49e8-b58f-93e7c1e7fd09",
+        "created_at": "2020-08-13T18:44:19.181287",
+        "updated_at": "2020-08-13T18:44:19.181354",
+        "city_id": "0001",
+        "user_id": "0001",
+        "name": "My little house",
+        "number_rooms": 4,
+        "number_bathrooms": 2,
+        "max_guest": 10,
+        "price_by_night": 300,
+        "latitude": 37.773972,
+        "longitude": -122.431297,
+        "__class__": "Place"
     }
 }

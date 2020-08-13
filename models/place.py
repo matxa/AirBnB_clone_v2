@@ -11,19 +11,18 @@ from models import storage
 
 metadata = Base.metadata
 place_amenity = Table('place_amenity', metadata,
-    Column(
-        'place_id',
-        String(60),
-        ForeignKey('places.id'),
-        primary_key=True,
-        nullable=False),
-    Column(
-        'amenity_id',
-        String(60),
-        ForeignKey('amenities.id'),
-        primary_key=True,
-        nullable=False)
-    )
+                      Column(
+                          'place_id',
+                          String(60),
+                          ForeignKey('places.id'),
+                          primary_key=True,
+                          nullable=False),
+                      Column(
+                          'amenity_id',
+                          String(60),
+                          ForeignKey('amenities.id'),
+                          primary_key=True,
+                          nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -68,5 +67,5 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amnenities(self, var=None):
             from models.amenity import Amenity
-            storage.all(Amenity)
+            d = storage.all(Amenity)
             self.amenity_ids.append(self.id)

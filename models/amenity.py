@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from models.base_model import BaseModel ,Base
+from models.base_model import BaseModel, Base
 from models.place import place_amenity
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -16,7 +16,6 @@ class Amenity(BaseModel, Base):
             'Place',
             secondary='place_amenity',
             back_populates='amenities')
-        # place_amenities = relationship('Place', ForeignKey('places.id'), cascade='all, delete-orphan')
 
     else:
 
