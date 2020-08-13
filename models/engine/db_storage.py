@@ -56,7 +56,7 @@ class DBStorage:
             query_data.append(self.__session.query(City).all())
             # query_data.append(self.__session.query(Amenity).all())
             query_data.append(self.__session.query(Place).all())
-            # query_data.append(self.__session.query(Review).all())
+            query_data.append(self.__session.query(Review).all())
 
         dict_objs = {}
         for row in query_data:
