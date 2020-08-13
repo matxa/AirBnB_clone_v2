@@ -51,7 +51,7 @@ class DBStorage:
         if cls:
             query_data.append(self.__session.query(cls).all())
         else:
-            # query_data.append(self.__session.query(User).all())
+            query_data.append(self.__session.query(User).all())
             query_data.append(self.__session.query(State).all())
             query_data.append(self.__session.query(City).all())
             # query_data.append(self.__session.query(Amenity).all())
