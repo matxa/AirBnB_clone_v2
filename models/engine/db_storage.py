@@ -61,7 +61,8 @@ class DBStorage:
         dict_objs = {}
         for row in query_data:
             for i in range(len(row)):
-                dict_objs["{}.{}".format(type(row[i]).__name__, row[i].id)] = row[i]
+                dict_objs["{}.{}".format(
+                    type(row[i]).__name__, row[i].id)] = row[i]
         return dict_objs
 
     def new(self, obj):
