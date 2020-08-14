@@ -54,7 +54,7 @@ class DBStorage:
             query_data.append(self.__session.query(User).all())
             query_data.append(self.__session.query(State).all())
             query_data.append(self.__session.query(City).all())
-            # query_data.append(self.__session.query(Amenity).all())
+            query_data.append(self.__session.query(Amenity).all())
             query_data.append(self.__session.query(Place).all())
             query_data.append(self.__session.query(Review).all())
 

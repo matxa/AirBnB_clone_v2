@@ -62,10 +62,9 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            return self.amenity_ids
-
-        @amenities.setter
-        def amnenities(self, var=None):
             from models.amenity import Amenity
             d = storage.all(Amenity)
-            self.amenity_ids.append(self.id)
+            instances = []
+            for v in d.values():
+                instances.append(v)
+            return instances
