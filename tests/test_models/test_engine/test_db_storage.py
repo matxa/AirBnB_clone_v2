@@ -43,7 +43,7 @@ class testDBStorage(unittest.TestCase):
 
     def test_new(self):
         """ test for new objects """
-        new = State(**{'name': 'Connecticut'})
+        new = State(**{'name': 'California'})
         new.save()
         self.assertIn(new, storage.all().values())
         new.delete()
@@ -55,7 +55,7 @@ class testDBStorage(unittest.TestCase):
 
     def test_save(self):
         """ DBStorage save method """
-        new = State(name="Connecticut")
+        new = State(name="California")
         self.assertNotIn(new, storage.all().values())
         new.save()
         self.assertIn(new, storage.all().values())
@@ -63,7 +63,7 @@ class testDBStorage(unittest.TestCase):
 
     def test_delete(self):
         """ tests delete method"""
-        new = State(**{'name': 'Connecticut'})
+        new = State(**{'name': 'California'})
         new.save()
         self.assertIn(new, storage.all().values())
         new.delete()
@@ -72,7 +72,7 @@ class testDBStorage(unittest.TestCase):
     def test_reload(self):
         """ Storage file is successfully loaded to __objects """
         from models.state import State
-        new = State(**{'name': 'Connecticut'})
+        new = State(**{'name': 'California'})
         new.save()
         self.assertIn(new, storage.all().values())
         storage.reload()
@@ -94,8 +94,8 @@ class testDBStorage(unittest.TestCase):
         length1 = self.cursor.fetchone()[0]
         self.cursor.close()
         self.db_connection.close()
-        state_string = 'create State id="2" name="Oklahoma"'
-        city_string = 'create City id="1" state_id="2" name="Tulsa"'
+        state_string = 'create State id="2" name="Connecticut"'
+        city_string = 'create City id="1" state_id="2" name="New Haven"'
         with patch('sys.stdout', new=StringIO()) as output:
             HBNBCommand().onecmd(state_string)
             HBNBCommand().onecmd(city_string)
@@ -137,7 +137,7 @@ class testDBStorage(unittest.TestCase):
 
     def testDeleteCity(self):
         """ Tests deleting cities """
-        new_state = State(name="Colorado", id="5280", cities=[
+        new_state = State(name="Californiao", id="5280", cities=[
                           City(name="Denver", id="22", state_id="5280")])
         new_state.save()
         self.assertIn('cities', new_state.to_dict())
