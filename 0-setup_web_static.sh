@@ -10,7 +10,7 @@ sudo mkdir -p /data/web_static/releases/
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 echo "<h1>Testing Nginx config</h1>" | sudo tee /data/web_static/releases/test/index.html
-sudo ln -sf /data/web_static/releases/test data/web_static/current
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 LINE="location /hbnb_static {\n\t\talias /data/web_static/current/;\n\t\tindex index.html;\n\t}"
 sudo sed -i "54i $LINE" /etc/nginx/sites-available/default
