@@ -4,11 +4,11 @@
 apt-get -y update
 apt-get -y install nginx
 sudo systemctl start nginx
-mkdir /data
-mkdir /data/web_static/
-mkdir /data/web_static/releases/
-mkdir /data/web_static/shared/
-mkdir /data/web_static/releases/test/
+mkdir -p /data
+mkdir -p /data/web_static/
+mkdir -p /data/web_static/releases/
+mkdir -p /data/web_static/shared/
+mkdir -p /data/web_static/releases/test/
 echo "<h1>Testing Nginx config</h1>" > /data/web_static/releases/test/index.html
 ln -sfn data/web_static/current /data/web_static/releases/test
 chown ubuntu:ubuntu /data/
