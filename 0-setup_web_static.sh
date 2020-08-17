@@ -14,5 +14,5 @@ ln -sfn data/web_static/current /data/web_static/releases/test
 chown ubuntu:ubuntu /data/
 chown g+x /data/
 LINE="location /hbnb_static {\n\t\talias /data/web_static/current/;\n\t\tindex index.html;\n\t}"
-sed -r "54i $LINE" /etc/nginx/sites-available/default
+sed -i "54i $LINE" /etc/nginx/sites-available/default
 service nginx restart
