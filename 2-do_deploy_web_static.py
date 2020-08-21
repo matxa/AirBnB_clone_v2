@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""Do Deploy"""
 from fabric.api import local
 from fabric.api import env
 from fabric.operations import run, put
