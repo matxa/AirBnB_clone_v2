@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Deploy webstack"""
 from fabric.api import *
-import fabric
 import os.path
 from os import path
 
@@ -20,11 +19,11 @@ def do_deploy(archive_path):
         run("sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/".format(
             f_y, f_n))
         run("sudo rm /tmp/{}".format(f_y))
-        run("sudo mv /data/web_static/releases/{}/web_static/* \
+        run("sudo mv /data/web_static/releases/{}/web_static/*\
             /data/web_static/releases/{}/".format(f_n, f_n))
         run("sudo rm -rf /data/web_static/releases/{}/web_static".format(f_n))
         run("sudo rm -rf /data/web_static/current")
-        run("sudo ln -s /data/web_static/releases/{}/ \
+        run("sudo ln -s /data/web_static/releases/{}/\
             /data/web_static/current".format(f_n))
         return True
     except Exception:
