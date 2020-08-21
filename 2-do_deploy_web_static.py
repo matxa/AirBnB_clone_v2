@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Deploy webstack"""
 from fabric.api import *
+import fabric
 import os.path
 from os import path
 
@@ -11,14 +12,20 @@ def do_deploy(archive_path):
     """deploy to server"""
     if path.exists('versions') is False:
         return False
-    f_no_ext = archive_path[archive_path.find('/') + 1:archive_path.find('.')]
-    f_yes_ext = archive_path[archive_path.find('/') + 1:]
-    put(archive_path, "/tmp/")
-    run("sudo mkdir -p /data/web_static/releases/{}/".format(f_no_ext))
-    run("sudo tar -xzvf /tmp/{} /data/web_static/{}".format(
-        f_yes_ext, f_no_ext))
-    run("sudo rm -rf /tmp/{}".format(f_yes_ext))
-    run("sudo rm -rf /data/web_static/current")
-    run("sudo ln -sf /data/web_static/releases/{}/ \
-        /data/web_static/current".format(f_no_ext))
-    return True
+    try:
+        f_n = archive_path[archive_path.find('/') + 1:archive_path.find('.')]
+        f_y = archive_path[archive_path.find('/') + 1:]
+        put(archive_path, "/tmp/")
+        run("sudo mkdir -p /data/web_static/releases/{}/".format(f_n))
+        run("sudo tar -xzf /tmp/{} -C /data/web_static/{}".format(
+            f_y, f_n))
+        run("sudo rm /tmp/{}".format(f_y))
+        run("sudo mv /data/web_static/releases/{}/web_static/* \
+            /data/web_static/releases/{}/".format(f_n, f_n))
+        run("sudo rm -rf /data/web_static/releases/{}/web_static".format(f_n))
+        run("rm -rf /data/web_static/current")
+        run("sudo ln -s /data/web_static/releases/{}/ \
+            /data/web_static/current".format(f_n))
+        return True
+    except Exception:
+        return False
