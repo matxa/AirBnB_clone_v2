@@ -5,15 +5,12 @@ from datetime import datetime
 import os.path
 from os import path
 
+time_stamp = datetime.now().strftime("%Y%m%d%H%M%S")
+tar_archive = "web_static_" + time_stamp + ".tgz"
+
 
 def do_pack():
-    try:
-        time_stamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        tar_archive = "web_static_" + time_stamp + ".tgz"
-        """run fabric on local"""
-        if path.exists('versions') is False:
-            local("mkdir versions")
-        local("tar -cvzf versions/{} web_static".format(tar_archive))
-        return tar_archive
-    except Exception:
-        return None
+    """run fabric on local"""
+    if path.exists('versions') is False:
+        local("mkdir versions")
+    local("tar -cvzf versions/{} web_static".format(tar_archive))
