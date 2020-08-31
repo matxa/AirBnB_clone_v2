@@ -2,9 +2,9 @@
 from web_flask import app
 
 
-@app.route('/hbnb', strict_slashes=False)
-def hbnb():
-    return "HBNB"
+@app.route('/c/<text>', strict_slashes=False)
+def get_text(text):
+    return 'C ' + text.replace('_', ' ')
 
 
 if __name__ == '__main__':
