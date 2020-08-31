@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from __init__ import app
+from web_flask import app
 
 
 @app.route('/', strict_slashes=False)
