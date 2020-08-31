@@ -14,3 +14,4 @@ def do_pack():
     if path.exists('versions') is False:
         local("mkdir versions")
     local("tar -cvzf versions/{} web_static".format(tar_archive))
+    return tar_archive
