@@ -1,9 +1,15 @@
 #!/usr/bin/python3
-from web_flask import app
+"""HBNB route
+"""
+from flask import Flask
+
+
+app = Flask(__name__)
 
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
+    """hbnb route"""
     return "HBNB"
 
 
