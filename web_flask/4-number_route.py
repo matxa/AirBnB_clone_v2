@@ -1,9 +1,15 @@
 #!/usr/bin/python3
-from web_flask import app
+"""c/num
+"""
+from flask import Flask
+
+
+app = Flask(__name__)
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def get_int(n):
+    """check if var is int"""
     return "{} is a number".format(n)
 
 
