@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Deploy webstack"""
 from fabric.api import *
 import os.path
