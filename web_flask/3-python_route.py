@@ -1,9 +1,16 @@
 #!/usr/bin/python3
-from web_flask import app
+"""using var in parenthis
+"""
+from flask import Flask, render_template
 
 
+app = Flask(__name__)
+
+
+@app.route('/python/', defaults={'text': "is cool"}, strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def get_text_py(text='is cool'):
+def get_text_py(text):
+    """get text from var"""
     return 'Python ' + text.replace('_', ' ')
 
 
