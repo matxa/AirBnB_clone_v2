@@ -13,8 +13,14 @@ app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
+def render_state():
+    """render html list"""
+    list_of_states = storage.all(State)
+    return render_template('9-states.html', states=list_of_states)
+
+
 @app.route('/states/<id>', strict_slashes=False)
-def render_state(id):
+def render_state_id(id=None):
     """render html list"""
     s = storage.all(State)
     c = storage.all(City)
@@ -38,4 +44,4 @@ def teardown_db(self):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port='5000', debug=True)
