@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """getting and rendering data from storage
 """
 from flask import Flask, render_template
@@ -15,10 +15,12 @@ def render_state_obj():
     """render html list"""
     # if os.getenv("HBNB_TYPE_STORAGE") == "db":
     list_of_states = storage.all(State)
-    print(list_of_states)
+    storage.close()
+    return render_template('7-states_list.html', states=list_of_states)
 
-    return render_template('7-states_list.html', obj=obj)
-
+@app.teardown_appcontext
+def teardown_db():
+    storage.close()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
