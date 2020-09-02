@@ -24,7 +24,7 @@ def render_state(id):
         if id == v.id:
             is_it = True
             state_name = v.name
-    return render_template('8-cities_by_states.html',
+    return render_template('9-states.html',
                            states=s,
                            cities=c,
                            is_it=is_it,
