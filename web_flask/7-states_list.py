@@ -17,9 +17,11 @@ def render_state_obj():
     list_of_states = storage.all(State)
     return render_template('7-states_list.html', states=list_of_states)
 
+
 @app.teardown_appcontext
 def teardown_db(self):
     storage.close()
 
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port='5000', debug=True)
