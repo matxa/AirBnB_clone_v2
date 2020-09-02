@@ -15,7 +15,6 @@ def render_state_obj():
     """render html list"""
     # if os.getenv("HBNB_TYPE_STORAGE") == "db":
     list_of_states = storage.all(State)
-    storage.close()
     return render_template('7-states_list.html', states=list_of_states)
 
 
