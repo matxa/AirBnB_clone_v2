@@ -6,6 +6,8 @@ from models import storage
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
+from models.place import Place
+from models.user import User
 import os
 from flask import g
 
@@ -13,16 +15,20 @@ from flask import g
 app = Flask(__name__)
 
 
-@app.route('/hbnb_filters', strict_slashes=False)
+@app.route('/hbnb', strict_slashes=False)
 def filters():
     """render html list"""
     s = storage.all(State)
     c = storage.all(City)
     a = storage.all(Amenity)
-    return render_template('10-hbnb_filters.html',
+    p = storage.all(Place)
+    u = storage.all(User)
+    return render_template('100-hbnb.html',
                            states=s,
                            cities=c,
-                           amenities=a)
+                           amenities=a,
+                           users=u,
+                           places=p)
 
 
 @app.teardown_appcontext
